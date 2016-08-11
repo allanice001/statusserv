@@ -1,4 +1,4 @@
-**System monitoring interface with node.js/socket.io back-end.**
+#System monitoring interface with node.js/socket.io back-end.
 
 Here's how to deploy it:
 
@@ -44,7 +44,7 @@ The server will run on port 8080. To change goto line 219 in server_status.js
     @reboot pm2 start /path/to/server_status.js
 ```
 
-# Description of the config.json file format
+**Description of the config.json file format**
 
 Each defined "system" may have "global" parameters and "subsystems" with their own parameters. 
 The only mandatory parameter is "data-file", which points to the telemetry file. 
