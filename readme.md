@@ -1,6 +1,6 @@
 **System monitoring interface with node.js/socket.io back-end.**
 
-This is how to deploy it:
+Here's how to deploy it:
 
 - Install node.js and npm if not in the system
 
