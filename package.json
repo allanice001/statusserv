@@ -1,6 +1,6 @@
 {
   "name": "statusserv",
-  "version": "0.1",
+  "version": "0.1.0",
   "description": "telemetry monitoring server",
   "repository": {
     "type": "git",

@@ -193,10 +193,6 @@ function fetch(config) {
 
     }
 
-    //console.log(data);
-    //console.log(data['ADC']['globals']['Updating']);
-    //console.log(data['ADC']['globals']['Time stamp']);
-
     return data;
 }
 
@@ -210,22 +206,12 @@ app.get('/', function(req, res){
     res.render('status.html', {skelet:skelet, layout:'one'});
 });
 
-// run image page
-app.get('/image', function(req, res){
-    res.render('image.html');
-});
 
 io.on('connection', function(socket){
     console.log('a user connected');
     socket.on('disconnect', function(){
         console.log('user disconnected');
     });
-    /*
-    socket.on('chat message', function(msg){
-        console.log('message: ' + msg);
-        io.emit('chat message', msg);
-    });
-    */
 });
 
 
@@ -234,24 +220,6 @@ http.listen(8080, function(){
     console.log('listening on *:8080');
 });
 
-
-// Copy telemetry data from NFS to local disk
-// mkdir telemetry if doesn't exist
-if (!fs.existsSync('telemetry')){
-    fs.mkdirSync('telemetry');
-}
-
-function cpLoop(source, destination) {
-    ncp(source, destination, function (err) {
-        if (err) {
-            return console.error(err);
-        }
-        // console.log('done!');
-    });
-    setTimeout(function() {cpLoop(source, destination)}, 700);
-}
-// cpLoop('/Users/dmitryduev/web/sserv/telemetry/', 'telemetry/');
-// cpLoop('/home/roboao/Status/', 'telemetry/');
 
 // Extract and stream telemetry data
 
@@ -267,36 +235,3 @@ function Loop() {
 }
 
 Loop();
-
-// Stream images
-
-// generate png files
-//var cmd = './lib/png2 /Users/dmitryduev/web/sserv-njs/public /Users/dmitryduev/web/sserv/telemetry';
-var cmd = './lib/png2 /Users/dmitryduev/web/sserv-njs/public /Users/dmitryduev/web/sserv-njs/telemetry';
-//var cmd = '/home/roboao/web/sserv-njs/lib/png2 /home/roboao/web/sserv-njs/public /home/roboao/Status;';
-//var cmd = '/home/roboao/web/sserv-njs/lib/png2 /home/roboao/web/sserv-njs/public /home/roboao/web/sserv-njs/telemetry;';
-
-// telemetry streaming loop
-function LoopImg() {
-    // generate png files, then stream 'em
-    exec(cmd, function(error, stdout, stderr) {
-        // command output is in stdout
-        //console.log(stdout);
-        //console.log(stderr);
-        //console.log(error);
-        if (error == null) {
-            fs.readFile('public/dm.png', function(err, buf){
-                io.emit('dm', { image: true, buffer: buf.toString('base64') });
-            });
-            fs.readFile('public/wfs.png', function(err, buf){
-                io.emit('wfs', { image: true, buffer: buf.toString('base64') });
-            });
-            fs.readFile('public/vicd.png', function(err, buf){
-                io.emit('vicd', { image: true, buffer: buf.toString('base64') });
-            });
-        }
-    });
-    setTimeout(function() {LoopImg()}, 1000);
-}
-
-LoopImg();

@@ -22,13 +22,15 @@ Here's how to deploy it:
 	npm install
 ```
 
-- Edit config.json - change paths to telemetry files and description of their content
+- Edit config.json - change paths to telemetry files (could be both abs and rel) and description of their content
 
 - Run the server as a daemon:
 
 ```
 	pm2 start server_status.js
 ```
+
+The server will run on port 8080. To change goto line 219 in server_status.js
 
 - To monitor performance:
 
