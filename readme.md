@@ -43,3 +43,37 @@ The server will run on port 8080. To change goto line 219 in server_status.js
 ```
     @reboot pm2 start /path/to/server_status.js
 ```
+
+# Description of the config.json file format
+
+Each defined "system" may have "global" parameters and "subsystems" with their own parameters. 
+The only mandatory parameter is "data-file", which points to the telemetry file. 
+The format for both the global and subsystem parameters is the same:
+
+```
+    "param name": [[position_1, position_2], {"color_code": [[range_1_1, range_1_2], [...]], ...}, bool, bool]]
+```
+
+The first arg defines the parameter index (or index range, i.e. 
+position_2 is not mandatory) in the telemetry file if you read 
+it in with the python _string_.split() function following the python 
+indexing convention (i.e., starting from zero).
+
+The second arg controls coloring. It could be an empty dict {}, then no coloring will be applied. 
+Otherwise the following color codes are available:
+```
+    "success" - green
+    "warning" - yellow
+    "danger" - red
+    "info" - blue
+```
+The range for each code is a list with either a (set of) interval(s) 
+or a (set of) string(s). In the special case of the "Time stamp" param, 
+the ranges are in seconds.
+
+3rd arg - plot parameter values or not.
+
+4th arg - should the whole panel turn red/yellow if this param turns red/yellow.
+
+
+Refer to the provided config.json for examples
