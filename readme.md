@@ -7,19 +7,19 @@ Here's how to deploy it:
 - Install pm2 process manager:
 
 ```
-	npm install pm2 -g
+npm install pm2 -g
 ```
 
 - Clone the repository:
 
 ```
-	git clone https://github.com/dmitryduev/statusserv.git
+git clone https://github.com/dmitryduev/statusserv.git
 ```
 
 - cd to the cloned directory and install node.js app dependencies:
 
 ```
-	npm install
+npm install
 ```
 
 - Edit config.json - change paths to telemetry files (could be both abs and rel) and description of their content
@@ -27,7 +27,7 @@ Here's how to deploy it:
 - Run the server as a daemon:
 
 ```
-	pm2 start server_status.js
+pm2 start server_status.js
 ```
 
 The server will run on port 8080. To change goto line 219 in server_status.js
@@ -35,13 +35,13 @@ The server will run on port 8080. To change goto line 219 in server_status.js
 - To monitor performance:
 
 ```
-	pm2 monit
+pm2 monit
 ```
 
 - Set up cronjob to run at system startup:
 
 ```
-    @reboot pm2 start /path/to/server_status.js
+@reboot pm2 start /path/to/server_status.js
 ```
 
 **Description of the config.json file format**
@@ -51,13 +51,26 @@ The only mandatory parameter is "data-file", which points to the telemetry file.
 The format for both the global and subsystem parameters is the same:
 
 ```
-    "param name": [[position_1, position_2], {"color_code": [[range_1_1, range_1_2], [...]], ...}, bool, bool]]
+"param name": [[position_1, position_2], {"color_code": [[range_1_1, range_1_2], [...]], ...}, bool, bool]]
 ```
 
 The first arg defines the parameter index (or index range, i.e. 
 position_2 is not mandatory) in the telemetry file if you read 
 it in with the python _string_.split() function following the python 
 indexing convention (i.e., starting from zero).
+
+For example, the following piece of code will set up two "good" _ranges_:
+
+```
+..."success": [[-83, -77], [10, 17]]...
+```
+
+and these will set up two good _values_:
+
+```
+..."success": [-83, -77]...
+..."success": ["good", "awesome"]...
+```
 
 The second arg controls coloring. It could be an empty dict {}, then no coloring will be applied. 
 Otherwise the following color codes are available:
