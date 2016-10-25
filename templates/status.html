@@ -236,7 +236,7 @@
         // minimize plots on body load
         $( window ).load(setTimeout(function() {
             {% for system, item in skelet %}
-                showHidePlots("{{system}}");
+            showHidePlots("{{system}}");
             {% endfor %}
         }, 2000));
     </script>
@@ -302,10 +302,10 @@
 
     <style>
         /*::-webkit-scrollbar{*/
-            /*background:transparent;*/
+        /*background:transparent;*/
         /*}*/
         /*::-webkit-scrollbar-thumb{*/
-            /*background-color: rgba(0,0,0,0);*/
+        /*background-color: rgba(0,0,0,0);*/
         /*}*/
     </style>
 
@@ -326,24 +326,24 @@
             <a class="navbar-brand" href="/">System status</a>
         </div>
         <!--<div id="navbar" class="navbar-collapse collapse">-->
-            <!--<ul class="nav navbar-nav">-->
-                <!--<li class="active"><a href="#">Status</a></li>-->
-                <!--<li><a href="/image">Images</a></li>-->
-                <!--<li><a href="http://www.oir.caltech.edu/twiki_oir/bin/viewauth/Palomar/RoboAO/WebHome">Twiki</a></li>-->
-                <!--<li class="dropdown" style="display:none">-->
-                    <!--<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"-->
-                       <!--aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>-->
-                    <!--<ul class="dropdown-menu">-->
-                        <!--<li><a href="#">Action</a></li>-->
-                        <!--<li><a href="#">Another action</a></li>-->
-                        <!--<li><a href="#">Something else here</a></li>-->
-                        <!--<li role="separator" class="divider"></li>-->
-                        <!--<li class="dropdown-header">Nav header</li>-->
-                        <!--<li><a href="#">Separated link</a></li>-->
-                        <!--<li><a href="#">One more separated link</a></li>-->
-                    <!--</ul>-->
-                <!--</li>-->
-            <!--</ul>-->
+        <!--<ul class="nav navbar-nav">-->
+        <!--<li class="active"><a href="#">Status</a></li>-->
+        <!--<li><a href="/image">Images</a></li>-->
+        <!--<li><a href="http://www.oir.caltech.edu/twiki_oir/bin/viewauth/Palomar/RoboAO/WebHome">Twiki</a></li>-->
+        <!--<li class="dropdown" style="display:none">-->
+        <!--<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"-->
+        <!--aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>-->
+        <!--<ul class="dropdown-menu">-->
+        <!--<li><a href="#">Action</a></li>-->
+        <!--<li><a href="#">Another action</a></li>-->
+        <!--<li><a href="#">Something else here</a></li>-->
+        <!--<li role="separator" class="divider"></li>-->
+        <!--<li class="dropdown-header">Nav header</li>-->
+        <!--<li><a href="#">Separated link</a></li>-->
+        <!--<li><a href="#">One more separated link</a></li>-->
+        <!--</ul>-->
+        <!--</li>-->
+        <!--</ul>-->
         <!--</div>-->
     </div>
 </nav>
@@ -373,7 +373,7 @@
             <div class="row">
 
                 <!-- System -->
-                <div class="col-md-12 col-sm-12">
+                <div class="col-md-12">
                     <!-- <div class="panel panel-default" style="display:none;" id="{{ system }}"> -->
                     <div class="panel panel-default" style="display:block;" id="{{ system }}">
                         <div class="panel-heading panel-heading-sm">
@@ -559,15 +559,14 @@
 
             </div>
 
-
             <!-- Log -->
             <!--<div id="col-log" class="col-md-2" style="background:#0f1420;-->
             <!--color:#999; overflow: auto;-->
             <!--height: 100vh; position: fixed; right: 0px;">-->
-                <!--<br><br><br><br>-->
-                <!--<div id="log">-->
-                    <!--&lt;!&ndash; Log placeholder. Tell operator if something turns yellow or red &ndash;&gt;-->
-                <!--</div>-->
+            <!--<br><br><br><br>-->
+            <!--<div id="log">-->
+            <!--&lt;!&ndash; Log placeholder. Tell operator if something turns yellow or red &ndash;&gt;-->
+            <!--</div>-->
             <!--</div>-->
 
             <!-- Colored labels -->
@@ -578,9 +577,9 @@
             padding: 0 0 0 5px; margin:0px; line-height:0.8;">
                 <br>
                 {% for system, item in skelet %}
-	 <span class="label label-default" id="{{ system }}-label"
-           style="font-size: 10px; font-weight:200; cursor:pointer;"
-           onclick="scrollTo('{{system}}')">{{system}}</span>&nbsp;
+                <span class="label label-default" id="{{ system }}-label"
+                      style="font-size: 10px; font-weight:200; cursor:pointer;"
+                      onclick="scrollTo('{{system}}')">{{system}}</span>&nbsp;
                 {% endfor %}
             </div>
 
