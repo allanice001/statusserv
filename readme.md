@@ -51,7 +51,8 @@ The only mandatory parameter is "data-file", which points to the telemetry file.
 The format for both the global and subsystem parameters is the same:
 
 ```
-"param name": [[position_1, position_2], {"color_code": [[range_1_1, range_1_2], [...]], ...}, bool, bool]]
+"param name": [[position_1, position_2], {"color_code": [[range_1_1, range_1_2], [...]], ...}, 
+               [bool, max_length, utc_local], bool]]
 ```
 
 The first arg defines the parameter index (or index range, i.e. 
@@ -84,9 +85,13 @@ The range for each code is a list with either a (set of) interval(s)
 or a (set of) string(s). In the special case of the "Time stamp" param, 
 the ranges are in seconds.
 
-3rd arg - plot parameter values or not.
+The 3rd arg controls plotting. The first value (boolean) in the list - display plot or not; 
+second \[must be set if first value is true\] - how many points to display before starting to shift the plot 
+(by default - 600, which corresponds to 10 minutes
+if updated each second); third \[must be set if first value is true\] - display time stamps in UTC ("UTC", default) 
+or local time ("local") 
 
-4th arg - should the whole panel turn red/yellow if this param turns red/yellow.
+4th arg - controls if the whole panel should turn red/yellow if this param turns red/yellow
 
 
 Refer to the provided config.json for examples

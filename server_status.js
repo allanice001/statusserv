@@ -1,6 +1,6 @@
 /*
     node.js/socket.io-based web-server for monitoring status telemetry
-s
+
     Dr. Dmitry A. Duev
     California Institute of Technology
  */
@@ -26,7 +26,7 @@ nunjucks.configure('templates', {
     express: app
 });
 // make it more pythonic
-nunjucks.installJinjaCompat()
+nunjucks.installJinjaCompat();
 
 // serve static files:
 app.use('/static', express.static('public'));
@@ -136,11 +136,19 @@ function fetch(config) {
                     }
 
                     // get plotting switch:
-                    var plot_switch = config[system][key][2];
+                    var plot_switch = config[system][key][2][0];
+                    var plot_length = 600;
+                    var plot_time_scale = "UTC";
+                    // number of points and time scale set?
+                    if (config[system][key][2].length > 1) {
+                        plot_length = config[system][key][2][1];
+                        plot_time_scale = config[system][key][2][2];
+                    }
+                    //console.log(key, plot_switch);
                     // get 'critical' switch:
                     var critical_switch = config[system][key][3];
                     data[system]['globals'][key] = [data[system]['globals'][key],
-                        color_code, plot_switch, critical_switch];
+                        color_code, plot_switch, plot_length, plot_time_scale, critical_switch];
                 }
                 else {
                     data[system]['subs'][key] = {};
@@ -174,11 +182,18 @@ function fetch(config) {
                         }
 
                         // get plotting switch:
-                        var plot_switch = config[system][key][key2][2];
+                        var plot_switch = config[system][key][key2][2][0];
+                        var plot_length = 600;
+                        var plot_time_scale = "UTC";
+                        // number of points and time scale set?
+                        if (config[system][key][key2][2].length > 1) {
+                            plot_length = config[system][key][key2][2][1];
+                            plot_time_scale = config[system][key][key2][2][2];
+                        }
                         // get 'critical' switch:
                         var critical_switch = config[system][key][key2][3];
                         data[system]['subs'][key][key2] = [data[system]['subs'][key][key2],
-                            color_code, plot_switch, critical_switch];
+                            color_code, plot_switch, plot_length, plot_time_scale, critical_switch];
                     }
                 }
 
