@@ -32,7 +32,16 @@ nunjucks.installJinjaCompat();
 app.use('/static', express.static('public'));
 
 // get/parse config.json
-var config = require('./config.json');
+var config_file = './config.json';
+if (process.argv.length > 2) {
+    if (process.argv[2][0] != '/' && process.argv[2][0] != '.') {
+        config_file = './' + process.argv[2];
+    }
+    else {
+        config_file = process.argv[2]
+    }
+}
+var config = require(config_file);
 
 // build a skeleton to make index.html from a template
 function skeleton(config) {
@@ -109,7 +118,7 @@ function fetch(config) {
                     // deal with it separately
                     // config.json lists ranges in seconds WRT datetime.now()
                     // beware that it should all be in UTC!
-                    if (key.toLowerCase().indexOf("time") != -1) {
+                    if (key.toLowerCase().indexOf("time") != -1 && key.toLowerCase().indexOf("stamp") != -1) {
                         var then = Date.parse(data[system]['globals'][key] + " UTC");
                         var now = Date.now();
                         // time between now and then in seconds:
@@ -121,7 +130,7 @@ function fetch(config) {
                     for (var code in config[system][key][1]) {
                         var rng = config[system][key][1][code];
                         if (rng[0] instanceof Array) {
-                            //console.log(key, code, rng);
+                            // console.log(system, key, code, rng);
                             rng.forEach(function(rn, i, rng) {
                                 if (rn[0]<= parseFloat(tmp) && parseFloat(tmp) < rn[1]){
                                     color_code = code;
@@ -144,7 +153,6 @@ function fetch(config) {
                         plot_length = config[system][key][2][1];
                         plot_time_scale = config[system][key][2][2];
                     }
-                    //console.log(key, plot_switch);
                     // get 'critical' switch:
                     var critical_switch = config[system][key][3];
                     data[system]['globals'][key] = [data[system]['globals'][key],
@@ -217,18 +225,8 @@ app.get('/', function(req, res){
     var skelet = skeleton(config);
     //console.log(skelet);
     // create html from a template and send it to user:
-    //res.sendFile('/Users/dmitryduev/web/sserv-njs/templates/index.html');
-    res.render('status.html', {skelet:skelet, layout:'one'});
+    res.render('status.html', {skelet:skelet});
 });
-
-
-io.on('connection', function(socket){
-    console.log('a user connected');
-    socket.on('disconnect', function(){
-        console.log('user disconnected');
-    });
-});
-
 
 // start listening
 http.listen(8080, function(){
@@ -246,7 +244,7 @@ function Loop() {
     io.emit('telemetry', data);
     //socket.volatile.emit
     //socket.broadcast.emit
-    setTimeout(function() {Loop()}, 1000);
+    setTimeout(function() {Loop()}, 900);
 }
 
 Loop();
