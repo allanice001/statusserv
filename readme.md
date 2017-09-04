@@ -1,4 +1,4 @@
-#System monitoring interface with node.js/socket.io back-end.
+# System monitoring interface with node.js/socket.io back-end.
 
 Here's how to deploy it:
 
