@@ -229,8 +229,9 @@ app.get('/', function(req, res){
 });
 
 // start listening
-http.listen(8080, function(){
-    console.log('listening on *:8080');
+var port = 8080;
+http.listen(port, function(){
+    console.log('listening on *:' + port);
 });
 
 

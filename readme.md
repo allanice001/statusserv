@@ -2,35 +2,44 @@
 
 Here's how to deploy it:
 
-- Install node.js and npm if not in the system
+- Install node.js and npm if not in the system. The code now uses socket.io v2, which in turn requires a fairly
+recent version of node.js (>4). In case that is not available on your system with the package manager, install 
+node.js manually. For example, on Fedora 21:
+```bash
+# remove old nodejs version:
+yum remove nodejs
+# get version 4.x from node's official repository:
+curl --silent --location https://rpm.nodesource.com/setup_4.x | bash -
+yum install -y nodejs
+```  
 
 - Install pm2 process manager:
 
-```
+```bash
 npm install pm2 -g
 ```
 
 - Clone the repository:
 
-```
+```bash
 git clone https://github.com/dmitryduev/statusserv.git
 ```
 
 - cd to the cloned directory and install node.js app dependencies:
 
-```
+```bash
 npm install
 ```
 
 - Edit config.json - change paths to telemetry files (could be both abs and rel) and description of their content
 
-- Run the server as a daemon:
+- Run the server as a daemon (from the cloned directory!):
 
-```
-pm2 start server_status.js
+```bash
+pm2 start server_status.js -- config.json
 ```
 
-The server will run on port 8080. To change goto line 219 in server_status.js
+The server will run on port 8080. To change goto line 232 in _server_status.js_
 
 - To monitor performance:
 
@@ -38,11 +47,23 @@ The server will run on port 8080. To change goto line 219 in server_status.js
 pm2 monit
 ```
 
-- Set up cronjob to run at system startup:
+- To set up pm2 to run/resurrect at system startup/reboot:
 
+```bash
+pm2 startup
 ```
-@reboot pm2 start /path/to/server_status.js
+The output of this command can be a recommendation of the line to copy/paste 
+with all environment variables and options configured for you.
+
+Once you started all the applications you want to manage, you can save the list across expected/unexpected 
+server restart by typing this command:
+
+```bash
+pm2 save
 ```
+It will save the process list with the corresponding environments into the dump file $PM2_HOME/.pm2/dump.pm2
+
+For more details go [here](http://pm2.keymetrics.io/docs/usage/startup/#saving-current-process-list)
 
 **Description of the config.json file format**
 
