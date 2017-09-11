@@ -43,7 +43,7 @@ The server will run on port 8080. To change goto line 232 in _server_status.js_
 
 - To monitor performance:
 
-```
+```bash
 pm2 monit
 ```
 
